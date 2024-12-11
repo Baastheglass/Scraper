@@ -43,8 +43,9 @@ def searchHashtag(searchCriteria):
     print("Top post clicked")
     time.sleep(10)
     WebDriverWait(driver, 100).until(EC.presence_of_element_located, (By.XPATH, "(//div[@class='x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1uhb9sk x1plvlek xryxfnj x1c4vz4f x2lah0s xdt5ytf xqjyukv x1qjc9v5 x1oa3qoh x1nhvcw1'])[5]"))
-    commentSection = driver.find_element(By.XPATH, "(//div[@class='x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1uhb9sk x1plvlek xryxfnj x1c4vz4f x2lah0s xdt5ytf xqjyukv x1qjc9v5 x1oa3qoh x1nhvcw1'])[5]")
-    comments = []
+    #comments = driver.find_element(By.CLASS_NAME, "_ap3a _aaco _aacu _aacx _aad7 _aade")
+    #print(comments.text)
+    #comments = []
     for i in range(100):
         while(driver.find_element(By.XPATH, "(//*[name()='svg'][@aria-label='Load more comments'])[1]") != None):
             scrollButton = driver.find_element(By.XPATH, "(//*[name()='svg'][@aria-label='Load more comments'])[1]")
@@ -53,22 +54,29 @@ def searchHashtag(searchCriteria):
             time.sleep(2.5)
             scrollButton.click()
             time.sleep(2.5)
-            comment = commentSection.find_elements(By.CLASS_NAME, "_a9zs")
-            time.sleep(2.5)
-            comments.append(comment)
-            for c in comment:
-                print(c.text)
-            print('\n')
+            spans = driver.find_elements(By.TAG_NAME, "span")
+            count = 0
+            for span in spans:
+                if(span.get_attribute('dir') == "auto" and span.text and count > 47 and span != spans[-1]):
+                    print(span.text)
+                count += 1
+            # comment = commentSection.find_elements(By.CLASS_NAME, "_a9zs")
+            # time.sleep(2.5)
+            # comments.append(comment)
+            # for c in comment:
+            #     print(c.text)
+            # print('\n')
             try:
                 driver.find_element(By.XPATH, "(//*[name()='svg'][@aria-label='Load more comments'])[1]")
             except:
                 break
-    
         print("While loop exited")
         #comments = list(dict.fromkeys(comments))
-        comments2 = dict.fromkeys(str(comments) for comment in comments)
+        #comments2 = dict.fromkeys(str(comments) for comment in comments)
         driver.find_element(By.XPATH, "(//*[name()='svg'][@aria-label='Next'])[1]").click()
-        commentSection = driver.find_element(By.XPATH, "(//div[@class='x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1uhb9sk x1plvlek xryxfnj x1c4vz4f x2lah0s xdt5ytf xqjyukv x1qjc9v5 x1oa3qoh x1nhvcw1'])[5]")
+        time.sleep(5)
+        
+        #print(comments.text)
         time.sleep(2.5)
             
     # driver.find_element(By.XPATH, "(//*[name()='svg'][@aria-label='Next'])[1]").click()
