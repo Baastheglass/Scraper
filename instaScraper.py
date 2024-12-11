@@ -55,9 +55,10 @@ def searchHashtag(searchCriteria):
             scrollButton.click()
             time.sleep(2.5)
             spans = driver.find_elements(By.TAG_NAME, "span")
+            spans.pop()
             count = 0
             for span in spans:
-                if(span.get_attribute('dir') == "auto" and span.text and count > 47 and span != spans[-1]):
+                if(span.get_attribute('dir') == "auto" and span.text and count > 65 and span != spans[-1]):
                     print(span.text)
                 count += 1
             # comment = commentSection.find_elements(By.CLASS_NAME, "_a9zs")
